@@ -27,7 +27,7 @@ const Home = () => {
               className="cont"
               routerLink="/signuppage"
             >
-              <IonLabel color="danger">Get started</IonLabel>
+              <IonLabel color="danger">Get started 21-07-2022 1:20pm </IonLabel>
             </IonButton>
           </IonRow>
         </IonGrid>
