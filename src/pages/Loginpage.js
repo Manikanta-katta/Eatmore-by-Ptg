@@ -10,28 +10,30 @@ import {
   IonRow,
   useIonAlert,
   useIonToast,
+  useIonLoading,
+  useIonViewWillEnter,
 } from "@ionic/react";
 
 import "./Logipage.css";
-import img1 from "../assets/images/Google.png";
-import img2 from "../assets/images/Facebook.png";
-import img3 from "../assets/images/Twitter.png";
-import img4 from "../assets/images/eatmore logo.png";
+//import { SignInWithGoogle } from "./firebase";
 import { Link } from "react-router-dom";
 import { firebaseApp } from "./firebase";
 import { useState, useEffect } from "react";
-import { toastController } from "@ionic/core";
-import logo from "../assets/images/Group 12.png";
+import img1 from "../assets/images/Google.png";
+
+//import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+//import { isPlatform } from "@ionic/react";
+import logo from "../assets/images/Eatmorelogo.png";
 import { alertOutline } from "ionicons/icons";
+
 const Login = () => {
-  const [user, setUser] = useState("");
+  const [ setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [emailError, setEmailError] = useState("");
-  const [PassswordError, setPasswordError] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [presant, dismiss] = useIonLoading();
+
 
   let router = useIonRouter();
 
@@ -39,10 +41,17 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
-  const clearErrors = () => {
-    setEmailError("");
-    setPasswordError("");
+
+  const hideTabs = () => {
+    const tabsEl = document.querySelector("ion-tab-bar");
+
+    if (tabsEl) {
+      tabsEl.hidden = true;
+    }
   };
+
+  useIonViewWillEnter(() => hideTabs());
+
   const authlistener = () => {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -55,7 +64,8 @@ const Login = () => {
   };
   useEffect(() => {
     authlistener();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const handleAlert = (err) => {
     presentAlert({
@@ -65,7 +75,7 @@ const Login = () => {
       backdropDismiss: true,
       transculent: true,
       animated: true,
-      cssClass: "lp-alert",
+     
     });
   };
 
@@ -81,33 +91,68 @@ const Login = () => {
     });
   };
 
+  // const signInGoogle = async () => {
+  //   GoogleAuth.initialize();
+  //   const result = await GoogleAuth.signIn();
+  //   console.log(result);
+  //   if (result) {
+  //     router.push("/tab", "forward");
+
+  //     console.log(result);
+  //   }
+  // };
+  // const googleLogin = () => {
+  //   if (isPlatform("android")) {
+  //     signInGoogle();
+  //   } else {
+  //     // SignInWithGoogle();
+  //   }
+  // };
   const handlelogin = () => {
-    clearErrors();
-
-    firebaseApp
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        router.push("/dashboard");
-      })
-      .then(() => {
-        handleToast(" You have login successfully");
-      })
-
-      .catch((err) => {
-        switch (err.code) {
-          case "auth/invalid-email":
-          case "auth/user-disabled":
-          case "auth/user-not-found":
-            setEmailError(err.message);
-            handleAlert(err);
-            break;
-          case "auth/wrong-password":
-            setPasswordError(err.message);
-
-            break;
-        }
+    clearInputs();
+    if (email == null || email === "") {
+      const msg = "please enter your email";
+      handleToast(msg);
+    } else if (password == null || password === "") {
+      const msg = "please enter your password";
+      handleToast(msg);
+    } else {
+      presant({
+        message: "Loading",
+        duration: 2000,
       });
+      firebaseApp
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          dismiss();
+          router.push("/tab", "forward");
+        })
+        .then(() => {
+          handleToast(" You have login successfully");
+        })
+
+        .catch((err) => {
+          switch (err.code) {
+            case "auth/invalid-email":
+            case "auth/user-disabled":
+            case "auth/user-not-found":
+              dismiss();
+              handleAlert(err);
+
+              break;
+
+            case "auth/wrong-password":
+              dismiss();
+              handleAlert(err);
+
+              break;
+              default:
+                break;
+          }
+        });
+      dismiss();
+    }
   };
 
   return (
@@ -150,11 +195,21 @@ const Login = () => {
           </IonRow>
           <IonRow className="line-text">
             <IonLabel className="tagline-txt">
-              Already have an Account ?{" "}
+              Don't have an Account ?{" "}
             </IonLabel>
-            <Link className="link-lo" to="/signuppage">
+            <Link onClick={clearInputs} className="link-lo" to="/signuppage">
               SignUp
             </Link>
+          </IonRow>
+          <IonRow className="gfauth-row">
+            <IonButton
+              // onClick={(e) => {
+              //   googleLogin();
+              // }}
+              fill="clear"
+            >
+              <IonImg className="image1" src={img1} alt=" "></IonImg>
+            </IonButton>
           </IonRow>
         </IonGrid>
       </IonContent>

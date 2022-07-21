@@ -1,0 +1,31 @@
+.menu-cont{
+ 
+    --background: white;
+}
+.menu-grid{
+    display: flex;
+    flex-direction: column;
+    /* --background: white; */
+}
+.menu-tb{
+    display: flex;
+    --background: white;
+    
+}
+.menu-h{
+    display: flex;
+  color: black;
+}
+.menu-txt{
+    display: flex;
+    color: black;
+}
+.menu-list{
+    display: flex;
+    flex-direction: column;
+    /* --background: white; */
+    color: brown;
+}
+.dashboard-row{
+    --background: white;
+}

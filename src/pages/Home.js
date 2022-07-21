@@ -9,8 +9,10 @@ import {
 } from "@ionic/react";
 
 import "./Home.css";
-import img from "../assets/images/logo.jpg";
+import img from "../assets/images/logo (2).png";
+
 const Home = () => {
+ 
   return (
     <IonPage>
       <IonContent fullscreen color="danger">
@@ -25,7 +27,7 @@ const Home = () => {
               className="cont"
               routerLink="/signuppage"
             >
-              <IonLabel color="danger">Get started</IonLabel>
+              <IonLabel color="danger">Get started 21-07-2022 1:20pm </IonLabel>
             </IonButton>
           </IonRow>
         </IonGrid>

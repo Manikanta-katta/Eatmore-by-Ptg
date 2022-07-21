@@ -1,7 +1,6 @@
 import {
   IonButton,
   IonContent,
- 
   IonInput,
   IonPage,
   IonImg,
@@ -10,32 +9,31 @@ import {
   IonRow,
   useIonRouter,
   useIonAlert,
-  useIonToast
+  useIonToast,
+ 
+  useIonLoading
 } from "@ionic/react";
 
 import "./Signuppage.css";
-import img1 from "../assets/images/Google.png";
-import img2 from "../assets/images/Facebook.png";
-import img3 from "../assets/images/Twitter.png";
-import img4 from "../assets/images/Group 11.png";
+
+
 import { Link } from "react-router-dom";
 import { firebaseApp } from "./firebase";
 import { useState, useEffect } from "react";
 
-import logo from "../assets/images/Group 12.png";
+import logo from "../assets/images/Eatmorelogo.png";
 import { alertOutline } from "ionicons/icons";
 
 const Signup = () => {
-  const [user, setUser] = useState("");
+  const [ setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [PassswordError, setPasswordError] = useState("");
+ 
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [presant, dismiss] =useIonLoading()
 
- 
   let router = useIonRouter();
 
   const clearinputs = () => {
@@ -43,10 +41,7 @@ const Signup = () => {
     setPassword("");
     setconfirmPassword("");
   };
-  const clearErrors = () => {
-    setEmailError("");
-    setPasswordError("");
-  };
+ 
   const authlistener = () => {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -59,42 +54,56 @@ const Signup = () => {
   };
   useEffect(() => {
     authlistener();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
-  const handleAlert = (err) =>{
+  const handleAlert = (err) => {
     presentAlert({
-      header:"Alert",
+      header: "Alert",
       message: err,
-      buttons:["OK"],
-      backdropDismiss:true,
-      transculent:true,
-      animated:true,
-      cssClass:"lp-tp-alert",
+      buttons: ["OK"],
+      backdropDismiss: true,
+      transculent: true,
+      animated: true,
+      cssClass: "lp-tp-alert",
     });
   };
 
-  const handleToast = (err)=>{
-     present({
-      message:err,
-      position:"top",
-      animated:true,
-      duration:2000,
-      color:"light",
-      model:"ios",
+  const handleToast = (err) => {
+    present({
+      message: err,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "light",
+      model: "ios",
       icon: alertOutline,
+    });
+  };
 
-     })
-  }
-
-  
   const handleSignup = () => {
-    clearErrors();
-    if (password === confirmpassword) {
+    // clearErrors();
+    clearinputs();
+    if(email == null || email ===""){
+      const msg = "please enter your email";
+      handleToast(msg);
+    }else if (password == null || password ==="") {
+      const msg = "please enter your password";
+      handleToast(msg);
+    }else if (password === confirmpassword) {
+     
+      presant({
+        message: 'Loading',
+        duration:2000
+      })
       firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, password, confirmpassword)
+   
         .then(() => {
-          router.push("/dashboard");
+          dismiss();
+          router.push("/loginpage");
+        
         })
         .then(() => {
           handleToast(" You have Registered successfully");
@@ -103,24 +112,28 @@ const Signup = () => {
           switch (err.code) {
             case "auth/email-already-in-use":
             case "auth/invalid-email":
-              setEmailError(err.message);
-             
+             dismiss();
+            handleAlert(err);
               break;
             case "auth/weak-password":
-              setPasswordError(err.message);
-               
+             dismiss();
+             handleAlert(err);
               break;
+              default:
+                break;
           }
-        }, handleAlert(emailError));
+        });
+        
     } else {
-      handleAlert("password as didn't matched");
+
+      //dismiss();
+   handleAlert("password as didn't matched");
     }
   };
   return (
     <IonPage>
+   
       <IonContent className="sign-cont">
-      
-
         <IonGrid className="ga-mg">
           <IonRow className="logo-ro">
             <IonImg className="home-last1" src={logo} alt=" "></IonImg>
@@ -150,9 +163,9 @@ const Signup = () => {
               onIonChange={(e) => setconfirmPassword(e.detail.value)}
             ></IonInput>
           </IonRow>
+          
           <IonRow className="card-row">
             <IonButton
-             
               onClick={handleSignup}
               color="danger"
               shape="round"
@@ -165,14 +178,12 @@ const Signup = () => {
             <IonLabel className="or">OR</IonLabel>
           </IonRow>
           <IonRow className="text-row">
-            <IonLabel className="text">Don't have any account ? </IonLabel>
-            <Link  to="/loginpage" className="txt">
+            <IonLabel className="text">Already  have any account ? </IonLabel>
+            <Link onClick={clearinputs} to="/loginpage" className="txt">
               Login
             </Link>
           </IonRow>
-          <IonRow>
-            <IonLabel></IonLabel>
-          </IonRow>
+         
         </IonGrid>
       </IonContent>
     </IonPage>

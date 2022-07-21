@@ -81,6 +81,7 @@
   margin-left: 15px;
 }
 .sign-cont {
+
   --background: white;
 }
 .ga-mg {
@@ -91,4 +92,14 @@
 }
 .lp-tp-alert {
   color: black;
+}
+/* .loading-spinner{
+  display: flex;
+  justify-content: center;
+} */
+.gfauth-signrow{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
 }

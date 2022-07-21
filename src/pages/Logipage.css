@@ -63,6 +63,7 @@
   
 }
 .ta-ta{
+
     --background: white;
 }
 .link-lo{
@@ -79,6 +80,12 @@
     color: black;
 }
 .lp-alert{
-    
+   
     color: black;
+}
+.gfauth-row{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+
 }
