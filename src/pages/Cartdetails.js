@@ -13,12 +13,12 @@ import {
   import  './Cartdetails.css'
 const Cartlist = () => {
     const [product,setproduct] = useState([]);
-    const [userId, setUserId] = useState();
-    auth.onAuthStateChanged(user =>{
-      setUserId(user.uid);
-      console.log(user.uid);
+//     const [userId, setUserId] = useState();
+//     auth.onAuthStateChanged(user =>{
+//       setUserId(user.uid);
+//       console.log(user.uid);
     
-     })
+//      })
 
     useEffect(() => {
       const CartRef = collection(db,"Users",auth.currentUser.uid, "Addtocartproducts");
