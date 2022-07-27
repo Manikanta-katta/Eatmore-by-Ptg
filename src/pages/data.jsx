@@ -1,4 +1,4 @@
-export const data = [
+export const datai = [
   {
     id: 1,
     image:

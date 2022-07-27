@@ -3,7 +3,6 @@ import {
   IonApp,
   useIonAlert,
   isPlatform,
-
   useIonLoading,
   IonRouterOutlet,
   setupIonicReact,

@@ -5,7 +5,7 @@
 .menu-grid{
     display: flex;
     flex-direction: column;
-    /* --background: white; */
+    --background: white;
 }
 .menu-tb{
     display: flex;
@@ -15,6 +15,13 @@
 .menu-h{
     display: flex;
   color: black;
+  justify-content: center;
+  margin-top: 15px;
+}
+.img-h{
+    display: flex;
+   margin-top: 10%;
+   margin-left: 46.5%;
 }
 .menu-txt{
     display: flex;
@@ -23,8 +30,8 @@
 .menu-list{
     display: flex;
     flex-direction: column;
-    /* --background: white; */
-    color: brown;
+    --background: white;
+
 }
 .dashboard-row{
     --background: white;

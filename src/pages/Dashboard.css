@@ -113,3 +113,7 @@
   display: flex;
   padding-left: 10%;
 }
+.cardcolor{
+  display: flex;
+  --background: white;
+}

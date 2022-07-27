@@ -1,0 +1,25 @@
+.Cartproducttxt{
+    display: flex;
+    font-size: x-large;
+    margin-top: 15px;
+    color: black;
+    margin-left: 2%; 
+}
+.cart-toolbar{
+    display: flex;
+
+    --background: white;
+}
+.cart-content{
+    display: flex;
+
+    --background: white;
+
+}
+.res-names{
+    color: black;
+}
+.search{
+    display: flex;
+    --background: white;
+}

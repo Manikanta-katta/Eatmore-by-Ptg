@@ -3,7 +3,8 @@ import "firebase/compat/auth";
 import { } from "firebase/compat/firestore";
 
 import { getAuth, } from "firebase/auth";
-
+import {useState,useEffect} from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 const firebaseConfig = {
@@ -38,5 +39,12 @@ export const ath = getAuth(firebaseApp);
 //       console.log(error);
 //     });
 // };
-
+export function useAuth(){
+  const [currentUser,setcurrentUser] = useState();
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth,(user) => setcurrentUser(user))
+    return unsub
+  },[]);
+  return currentUser;
+}
 export { firebaseApp };

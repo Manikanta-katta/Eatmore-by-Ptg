@@ -1,0 +1,4 @@
+.tabBar{
+    display: flex;
+    --background: white;
+}
