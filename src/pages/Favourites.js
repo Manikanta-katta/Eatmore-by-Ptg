@@ -3,7 +3,7 @@ import {
     collection,
     getDocs,
     deleteDoc,
-    doc
+   
     
   } from "firebase/firestore";
   import { db,auth } from "./firebase";
@@ -13,13 +13,13 @@ import {
   import "./Favourites.css"
 const Favourites = () => {
   const [product,setproduct] = useState([]);
-    const [userId, setUserId] = useState({});
+//     const [userId, setUserId] = useState({});
     
-    auth.onAuthStateChanged(user =>{
-      setUserId(user.uid);
+//     auth.onAuthStateChanged(user =>{
+//       setUserId(user.uid);
 
     
-     })
+//      })
     
     useEffect(() => {
   
