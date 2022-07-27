@@ -1,33 +1,21 @@
-import { IonPage, IonSearchbar, IonToolbar,IonContent,IonGrid,IonRow,IonText,IonCol,IonButton,IonCard, IonIcon} from "@ionic/react";
+import { IonPage, IonSearchbar, IonToolbar,IonContent} from "@ionic/react";
 import {
-    collection,
-    getDocs,
-    deleteDoc,
+  
     doc,
     onSnapshot
     
   } from "firebase/firestore";
   import { db } from "./firebase";
   import { useState, useEffect } from "react";
-  import { LazyLoadImage } from "react-lazy-load-image-component";
-  import {trashOutline} from "ionicons/icons";
-import { useParams } from "react-router";
-const ProductDetails = () => {
+ import  { useParams } from "react-router";
+ const ProductDetails = () => {
     const id = useParams();
     const docref = doc(db,"App_products",id);
-    const [details,setdetails] = useState({
-        Restaurant:"",
-        name:"",
-        image:"",
-        price:"",
-    })
    
      useEffect(()=>{
         onSnapshot(docref,(doc)=>{
-
-        
             if(doc.exists()){
-           const data = doc.data().Restaurant;
+         
            
             }
         })
