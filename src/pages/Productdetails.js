@@ -6,7 +6,7 @@ import {
     
   } from "firebase/firestore";
   import { db } from "./firebase";
-  import { useState, useEffect } from "react";
+  import { useEffect } from "react";
  import  { useParams } from "react-router";
  const ProductDetails = () => {
     const id = useParams();
