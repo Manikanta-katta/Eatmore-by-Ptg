@@ -19,6 +19,7 @@ import Login from "./Loginpage";
 import "./Tab.css";
 
 import { UserAuth } from "./Authcontext";
+import ProductDetails from "./Productdetails";
 
 const Tab = () => {
   const { count, favlist } = UserAuth();
@@ -47,6 +48,9 @@ const Tab = () => {
           <Route path="/loginpage">
             <Login />
           </Route>
+          <Route path="/tab/Dashboard/:id" exact>
+            <ProductDetails />
+          </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" color="white" className="tabBar">
           <IonTabButton
@@ -60,12 +64,12 @@ const Tab = () => {
           <IonTabButton className="tab-btn" tab="Cart" href="/tab/Favourites">
             <IonLabel className="fav-count">{favlist}</IonLabel>
             <IonIcon icon={heart} />
-            <IonLabel>Favourites</IonLabel>
+            <IonLabel className="fav-t">Favourites</IonLabel>
           </IonTabButton>
           <IonTabButton className="tab-btn" tab="home" href="/tab/cartdetails">
             <IonLabel className="cart-count">{count}</IonLabel>
             <IonIcon icon={cart} />
-            <IonLabel>Cart</IonLabel>
+            <IonLabel className="cart-t">Cart</IonLabel>
           </IonTabButton>
           <IonTabButton
             className="tab-btn"

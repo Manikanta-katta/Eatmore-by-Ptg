@@ -11,13 +11,7 @@ import {
   IonButton,
   IonCard,
 } from "@ionic/react";
-import {
-  collection,
-
-  deleteDoc,
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";

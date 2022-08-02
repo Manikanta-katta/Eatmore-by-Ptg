@@ -12,7 +12,7 @@ import {
   IonToolbar,
   IonHeader,
   IonAvatar,
-  IonImg
+  IonImg,
 } from "@ionic/react";
 
 import { firebaseApp } from "./firebase";
@@ -46,6 +46,7 @@ const Menu = () => {
       .signOut()
       .then(() => {
         router.push("/loginpage");
+        window.location.reload();
       })
       .then(() => {
         handleToast("You have logout successfully");
@@ -53,16 +54,17 @@ const Menu = () => {
   };
   return (
     <IonPage>
-      
-        <IonToolbar className="menu-tb">
-          <IonAvatar className="img-h" ><IonImg  src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></IonImg></IonAvatar>
-          <IonHeader ><IonLabel className="menu-h">{currentUser?.email}</IonLabel></IonHeader>
-        </IonToolbar>
-        <IonContent fullscreen className="menu-cont">
+      <IonToolbar className="menu-tb">
+        <IonAvatar className="img-h">
+          <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></IonImg>
+        </IonAvatar>
+        <IonHeader>
+          <IonLabel className="menu-h">{currentUser?.email}</IonLabel>
+        </IonHeader>
+      </IonToolbar>
+      <IonContent fullscreen className="menu-cont">
         <IonGrid className="menu-grid">
           <IonList className="menu-list">
-           
-
             <IonItem button>
               <IonRow>
                 <IonLabel>Settings</IonLabel>

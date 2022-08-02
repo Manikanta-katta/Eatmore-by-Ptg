@@ -10,19 +10,42 @@ import {
   IonButton,
   IonCard,
   IonIcon,
+  useIonRouter,
 } from "@ionic/react";
-import { collection, deleteDoc, onSnapshot,doc } from "firebase/firestore";
+import { collection, deleteDoc, onSnapshot, doc } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { trashOutline } from "ionicons/icons";
 import "./Cartdetails.css";
 import { UserAuth } from "./Authcontext";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 const Cartlist = () => {
+  const router = useIonRouter();
   const [product, setproduct] = useState([]);
-  const {setcount} = UserAuth();
+  const { setcount } = UserAuth();
+  const [total, setTotal] = useState();
 
+  const priceForStripe = product.total * 100;
+  const payNow = async (token) => {
+    try {
+      const response = await axios({
+        url: "http://localhost:8100/payment",
+        method: "post",
+        data: {
+          amount: product.price * 100,
+          token,
+        },
+      });
+      if (response.status === 2000) {
+        console.log("Your payment was successfull");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // auth.onAuthStateChanged((user) => {
   //   setUserId(user.uid);
@@ -37,12 +60,15 @@ const Cartlist = () => {
     );
     onSnapshot(CartRef, (snapshot) => {
       let products = [];
+      let Total = 0;
       snapshot.docs.forEach((doc) => {
+        Total = Total + doc.data().price;
         products.push({ ...doc.data(), id: doc.id });
       });
       console.log(products.length);
       setcount(products.length);
       setproduct(products);
+      setTotal(Total);
     });
   };
 
@@ -58,12 +84,12 @@ const Cartlist = () => {
   //     "Addtocartproducts",id
   //   );
   //   deleteDoc(deleteref, {
-      
+
   //   });
   // };
-  const ondelete =(id)=>{
-    deleteDoc(doc(db,"Users",auth.currentUser.uid,"Addtocartproducts",id));
-  } ;
+  const ondelete = (id) => {
+    deleteDoc(doc(db, "Users", auth.currentUser.uid, "Addtocartproducts", id));
+  };
 
   return (
     <IonPage>
@@ -82,7 +108,12 @@ const Cartlist = () => {
             return (
               <IonRow key={Data.id}>
                 <IonCol className="data">
-                  <IonCard>
+                  <IonCard
+                    button
+                    onClick={() => {
+                      router.push(`Dashboard/${Data.id}`);
+                    }}
+                  >
                     <LazyLoadImage
                       effect="opacity"
                       src={Data.image}
@@ -124,6 +155,20 @@ const Cartlist = () => {
           })}
         </IonGrid>
       </IonContent>
+      <IonButton className="total" color="danger">
+        {" "}
+        <StripeCheckout
+          stripeKey="pk_test_51LQ3MDSBZsnWZCC5NT8FjMT29baQo8xu9xIVjZatH4ec6ioWjjhjj4QqSrEVrmt5eCjPYdDUvNK6kONvCyJz8Ipr00M8oGkbhs"
+          label="PayNow"
+          name="Pay with credit card"
+          billingAddress
+          shippingAddress
+          amount={priceForStripe}
+          description={`Your total is Rs.${total}`}
+          token={payNow}
+        />
+        Total : ₹{total}
+      </IonButton>
     </IonPage>
   );
 };

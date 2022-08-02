@@ -1,0 +1,45 @@
+.detail-text{
+    display: flex;
+    font-size: x-large;
+    margin-top: 15px;
+    color: black;
+    margin-left: 2%;
+
+}
+.res-text{
+display: flex;
+font-weight: bold;
+color: black;
+margin-left: 2%;
+margin-top: 2%;
+}
+.name-text{
+    display: flex;    
+    color: black;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+.price-text{
+display: flex;    
+color: green;
+margin-left: 2%;
+margin-top: 2%;
+}
+.checkout-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+.addtocart-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+.img{
+    display: flex;
+    margin-top: 2%;
+}
+.img-card{
+    display:flex;
+
+}
