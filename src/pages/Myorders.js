@@ -11,26 +11,22 @@ import {
     IonCard,
     IonIcon,
     useIonRouter,
-    useIonToast,
+ 
     IonLabel,
   } from "@ionic/react";
   import {
     collection,
-    getDocs,
-    deleteDoc,
-    QuerySnapshot,
+   
     onSnapshot,
-    doc,
-    addDoc,
+   
   } from "firebase/firestore";
   import { db, auth } from "./firebase";
   import { useState, useEffect } from "react";
   import { LazyLoadImage } from "react-lazy-load-image-component";
   import { trashOutline } from "ionicons/icons";
   import "./Cartdetails.css";
-  import { alertCircle, arrowBack, heart } from "ionicons/icons";
-  import { UserAuth } from "./Authcontext";
-  import { onAuthStateChanged } from "firebase/auth";
+  import {  arrowBack  } from "ionicons/icons";
+ 
   import "./Myorder.css";
   const MyOrders = () => {
     const router = useIonRouter();
