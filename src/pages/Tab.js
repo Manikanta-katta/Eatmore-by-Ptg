@@ -20,6 +20,8 @@ import "./Tab.css";
 
 import { UserAuth } from "./Authcontext";
 import ProductDetails from "./Productdetails";
+import Payment from "./payment";
+import MyOrders from "./Myorders";
 
 const Tab = () => {
   const { count, favlist } = UserAuth();
@@ -27,7 +29,7 @@ const Tab = () => {
   return (
     <IonReactRouter>
       <IonTabs>
-        <IonRouterOutlet>
+      <IonRouterOutlet>
           <Route path="/tab/Dashboard">
             <Dashboard />
           </Route>
@@ -41,7 +43,7 @@ const Tab = () => {
           <Route path="/tab/Favourites">
             <Favourites />
           </Route>
-
+        
           <Route exact path="/tab">
             <Redirect to="/tab/Dashboard" />
           </Route>
@@ -50,6 +52,12 @@ const Tab = () => {
           </Route>
           <Route path="/tab/Dashboard/:id" exact>
             <ProductDetails />
+          </Route>
+          <Route path="/tab/payment">
+            <Payment />
+          </Route>
+          <Route path="/tab/Myorders">
+            <MyOrders />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" color="white" className="tabBar">

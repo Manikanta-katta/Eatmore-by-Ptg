@@ -1,0 +1,12 @@
+.order-time{
+    display: flex;
+    font-size: 16px;
+    padding-left: 7px;
+
+}
+.order-price{
+display: flex;
+font-size: 19px;
+padding-left: 9px;
+color: black;
+}

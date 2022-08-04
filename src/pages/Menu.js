@@ -79,7 +79,7 @@ const Menu = () => {
 
             <IonItem button>
               <IonRow>
-                <IonLabel> Your Orders</IonLabel>
+                <IonLabel onClick={() =>{router.push("/tab/myorders")}}> My Orders</IonLabel>
               </IonRow>
             </IonItem>
 

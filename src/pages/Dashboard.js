@@ -16,6 +16,7 @@ import {
   IonToolbar,
   useIonToast,
   useIonRouter,
+
 } from "@ionic/react";
 import { datai } from "./data";
 import { useState, useEffect } from "react";
@@ -24,13 +25,16 @@ import "./Dashboard.css";
 import logo from "../assets/images/Eatmorelogo.png";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, } from "firebase/firestore";
 import { auth, db } from "./firebase";
 
-const Dashboard = () => {
-  const router = useIonRouter();
-  const [product, setproduct] = useState([]);
 
+
+const Dashboard = () => {
+  
+ const router = useIonRouter();
+  const [product, setproduct] = useState([]);
+  
   const [present] = useIonToast();
   const [sdata, setData] = useState([]);
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
@@ -69,21 +73,22 @@ const Dashboard = () => {
       image: image,
       price: price,
     });
-
+ 
     handleToast(msg1);
   };
 
   // adding addtocart
 
-  const addtoCart = (Restaurant, name, image, price, cart) => {
+  const addtoCart = (Restaurant, name, image, price,cart) => {
     const addtocartref = collection(db, "Users", userId, "Addtocartproducts");
     addDoc(addtocartref, {
       Restaurant: Restaurant,
       name: name,
       image: image,
       price: price,
-      cart: [],
+     
     });
+    
 
     handleToast(msg);
   };
@@ -119,9 +124,11 @@ const Dashboard = () => {
     pushData();
   });
 
+
   // getting products in to dashboard
   const productRef = collection(db, "App_products");
   useEffect(() => {
+    
     getDocs(productRef)
       .then((snapshot) => {
         let products = [];
@@ -135,7 +142,8 @@ const Dashboard = () => {
         console.log(err.message);
       });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

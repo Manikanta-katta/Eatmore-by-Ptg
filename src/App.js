@@ -40,6 +40,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./pages/firebase.js";
 import { AuthContextProvider } from "./pages/Authcontext";
+import Payment from "./pages/payment";
 
 setupIonicReact();
 
@@ -137,7 +138,9 @@ const App = () => {
           <Route exact path="/loginpage">
             <Login />
           </Route>
-
+          <Route exact path="/payment">
+            <Payment />
+          </Route>
           <Route path="/tab">
             <Tab />
           </Route>

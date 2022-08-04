@@ -11,23 +11,27 @@ import {
   IonCard,
   IonIcon,
   useIonRouter,
+  useIonToast,
 } from "@ionic/react";
-import { collection, deleteDoc, onSnapshot, doc } from "firebase/firestore";
+import { collection, deleteDoc, onSnapshot,doc,addDoc, setDoc,Timestamp } from "firebase/firestore";
 import { db, auth } from "./firebase";
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { trashOutline } from "ionicons/icons";
 import "./Cartdetails.css";
 import { UserAuth } from "./Authcontext";
+
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
 const Cartlist = () => {
+  const [present] = useIonToast();
   const router = useIonRouter();
   const [product, setproduct] = useState([]);
-  const { setcount } = UserAuth();
+  const {setcount} = UserAuth();
   const [total, setTotal] = useState();
-
+  const [userId,setUserId] = useState();
+  const msg1 = " products are in ordering"
   const priceForStripe = product.total * 100;
   const payNow = async (token) => {
     try {
@@ -35,22 +39,36 @@ const Cartlist = () => {
         url: "http://localhost:8100/payment",
         method: "post",
         data: {
-          amount: product.price * 100,
+          amount:total * 100,
           token,
         },
       });
-      if (response.status === 2000) {
+      if (response.status === 200) {
+      
+       
         console.log("Your payment was successfull");
       }
     } catch (error) {
       console.log(error);
+      deleteallproducts();
+      router.push("/tab/payment")
     }
   };
+  const handleToast = (err) => {
+    present({
+      message: err,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "light",
+      model: "ios",
+    });
+  };
 
-  // auth.onAuthStateChanged((user) => {
-  //   setUserId(user.uid);
-  //   console.log(user.uid);
-  // });
+  auth.onAuthStateChanged((user) => {
+    setUserId(user.uid);
+    console.log(user.uid);
+  });
   const addtocart = () => {
     const CartRef = collection(
       db,
@@ -65,31 +83,47 @@ const Cartlist = () => {
         Total = Total + doc.data().price;
         products.push({ ...doc.data(), id: doc.id });
       });
-      console.log(products.length);
+  
       setcount(products.length);
       setproduct(products);
       setTotal(Total);
     });
   };
+  // const Checkout = () => {
+    
+ 
+  //   handleToast(msg1);
+  // };
+
+   const deleteallproducts = () =>{
+    const addtocheckoutref = collection(db, "Users", userId, "Orders");
+    addDoc(addtocheckoutref, {
+  
+    product,
+    Totalprice:total,
+    createdAt: Timestamp.fromDate(new Date()),
+    });
+    onSnapshot(collection(db,"Users",auth.currentUser.uid,"Addtocartproducts"),(snapshot)=>{
+      snapshot.docs.forEach((docs) =>{
+        setDoc(doc(db,"Users",auth.currentUser.uid,"OrderList",docs.id),{
+          Restaurant: docs.data().Restaurant,
+          name:docs.data().name,
+          image:docs.data().image,
+          price: docs.data().price,
+        });
+        deleteDoc(doc(db,"Users",auth.currentUser.uid,"Addtocartproducts",docs.id));
+      });
+    });
+   }
 
   useEffect(() => {
     addtocart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const ondelete = (id) => {
-  //   const deleteref = collection(
-  //     db,
-  //     "Users",
-  //     auth.currentUser.uid,
-  //     "Addtocartproducts",id
-  //   );
-  //   deleteDoc(deleteref, {
-
-  //   });
-  // };
-  const ondelete = (id) => {
-    deleteDoc(doc(db, "Users", auth.currentUser.uid, "Addtocartproducts", id));
-  };
+  
+  const ondelete =(id)=>{
+    deleteDoc(doc(db,"Users",auth.currentUser.uid,"Addtocartproducts",id));
+  } ;
 
   return (
     <IonPage>
@@ -133,9 +167,9 @@ const Cartlist = () => {
                       <IonText className="price"> Price :{Data.price}</IonText>
                     </IonRow>
                     <IonRow>
-                      <IonButton color="danger" href="/tab/paymentpage">
+                      {/* <IonButton color="danger" href="/tab/paymentpage">
                         Order
-                      </IonButton>
+                      </IonButton> */}
                     </IonRow>
                     <IonRow>
                       <IonButton
