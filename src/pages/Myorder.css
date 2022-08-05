@@ -10,3 +10,19 @@ font-size: 19px;
 padding-left: 9px;
 color: black;
 }
+.cart-content{
+    --background: white;
+}
+.cart-toolbar{
+    --background: white;
+}
+.Cartproducttxt{
+    display: flex;
+    color: black;
+}
+.search{
+    --background: white;
+}
+.order-card{
+    --background: white;  
+}

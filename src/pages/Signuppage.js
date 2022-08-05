@@ -21,8 +21,11 @@ import { useState } from "react";
 import { db } from "./firebase";
 import logo from "../assets/images/Eatmorelogo.png";
 import { alertOutline } from "ionicons/icons";
+import emailjs from '@emailjs/browser';
+
 
 const Signup = () => {
+  const [username, setusername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
@@ -62,10 +65,25 @@ const Signup = () => {
       icon: alertOutline,
     });
   };
-
+  var templateParams = {
+    email:email,
+    name:username,
+    
+  }
+  const sendEmail = () =>{
+    emailjs.send("service_nnqe814","template_7858nqa",templateParams,"AecK30ifXvhbkWl0y")
+    .then((result)=>{
+      console.log(result.text);
+    },(error)=>{
+      console.log(error.text);
+    }
+    )
+  }
   const handleSignup = () => {
     // clearErrors();
     clearinputs();
+   
+    sendEmail();
     if (email == null || email === "") {
       const msg = "please enter your email";
       handleToast(msg);
@@ -127,6 +145,12 @@ const Signup = () => {
             <IonLabel className="signtxt">SignUp</IonLabel>
           </IonRow>
           <IonRow className="inputs">
+          <IonInput
+              className="input0"
+              placeholder="Enter your username"
+              value={username}
+              onIonChange={(e) => setusername(e.detail.value)}
+            ></IonInput>
             <IonInput
               className="input1"
               placeholder="Enter your email"

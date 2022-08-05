@@ -18,7 +18,7 @@ import {
   useIonRouter,
 
 } from "@ionic/react";
-import { datai } from "./data";
+
 import { useState, useEffect } from "react";
 import { menu, heartOutline } from "ionicons/icons";
 import "./Dashboard.css";
@@ -94,16 +94,16 @@ const Dashboard = () => {
   };
 
   const pushData = () => {
-    const max = sdata.length + 10;
-    const min = max - 10;
+    const max = sdata.length + 5;
+    const min = max - 5;
     const newData = [];
 
-    if (sdata.length === 30) {
+    if (sdata.length === 7) {
       setInfiniteDisabled(true);
     } else {
       for (let i = min; i < max; i++) {
-        datai[i].id = datai[i].id + i * i;
-        newData.push(datai[i]);
+        product[i].id = product[i].id + i * i;
+        newData.push(product[i]);
       }
 
       setData([...sdata, ...newData]);
@@ -115,8 +115,8 @@ const Dashboard = () => {
       pushData();
       console.log("Loaded data");
       ev.target.complete();
-      if (sdata.length === 10) {
-        setInfiniteDisabled(sdata.length < 10);
+      if (sdata.length === 5) {
+        setInfiniteDisabled(sdata.length < 5);
       }
     }, 5000);
   };

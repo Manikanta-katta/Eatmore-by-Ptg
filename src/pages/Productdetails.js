@@ -81,7 +81,7 @@ const ProductDetails = () => {
 
   return (
     <IonPage>
-      <IonToolbar>
+      <IonToolbar className="detail-tool">
         <IonButton
           color="dark"
           fill="clear"
@@ -92,7 +92,7 @@ const ProductDetails = () => {
           <IonIcon icon={arrowBack}></IonIcon>
         </IonButton>
       </IonToolbar>
-      <IonContent>
+      <IonContent className="detail-cont">
         <IonGrid>
           <IonCard>
             <IonRow>

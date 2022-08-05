@@ -11,7 +11,7 @@ import {
   IonCard,
   IonIcon,
   useIonRouter,
-  useIonToast,
+
 } from "@ionic/react";
 import { collection, deleteDoc, onSnapshot,doc,addDoc, setDoc,Timestamp } from "firebase/firestore";
 import { db, auth } from "./firebase";
@@ -25,13 +25,13 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
 const Cartlist = () => {
-  const [present] = useIonToast();
+
   const router = useIonRouter();
   const [product, setproduct] = useState([]);
   const {setcount} = UserAuth();
   const [total, setTotal] = useState();
   const [userId,setUserId] = useState();
-  const msg1 = " products are in ordering"
+ 
   const priceForStripe = product.total * 100;
   const payNow = async (token) => {
     try {
@@ -51,19 +51,11 @@ const Cartlist = () => {
     } catch (error) {
       console.log(error);
       deleteallproducts();
+    
       router.push("/tab/payment")
     }
   };
-  const handleToast = (err) => {
-    present({
-      message: err,
-      position: "top",
-      animated: true,
-      duration: 2000,
-      color: "light",
-      model: "ios",
-    });
-  };
+
 
   auth.onAuthStateChanged((user) => {
     setUserId(user.uid);
@@ -126,7 +118,7 @@ const Cartlist = () => {
   } ;
 
   return (
-    <IonPage>
+    <IonPage className="page">
       <IonToolbar className="cart-toolbar">
         <IonSearchbar className="search" placeholder="Search"></IonSearchbar>
         <IonGrid>

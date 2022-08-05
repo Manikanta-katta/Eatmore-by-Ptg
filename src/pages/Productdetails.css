@@ -43,3 +43,9 @@ margin-top: 2%;
     display:flex;
 
 }
+.detail-cont{
+    --background: white;  
+}
+.detail-tool{
+    --background: white;  
+}

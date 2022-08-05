@@ -29,3 +29,9 @@
     display: flex;
     --background: white;
 }
+.total{
+    --background: white;
+}
+.page{
+    --background: white; 
+}

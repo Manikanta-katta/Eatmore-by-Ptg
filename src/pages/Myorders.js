@@ -82,7 +82,7 @@ import {
             {order.map((data) => {
               return (
                 <IonRow key={data.id}>
-                  <IonCard>
+                  <IonCard className="order-card">
                   
                   {data.product.map((Data) => {
                     return (
