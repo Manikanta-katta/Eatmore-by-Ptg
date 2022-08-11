@@ -2,9 +2,10 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { } from "firebase/compat/firestore";
 
-import { getAuth, } from "firebase/auth";
+import { getAuth,  } from "firebase/auth";
 import {useState,useEffect} from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+
 
 
 const firebaseConfig = {
@@ -23,8 +24,8 @@ export const db = firebase.firestore(firebaseApp);
 
 export const ath = getAuth(firebaseApp);
 
-// const provider = new GoogleAuthProvider();
-// const router = useIonRouter();
+//const provider = new GoogleAuthProvider();
+
 // export const SignInWithGoogle = () => {
 
 //   signInWithPopup(auth, provider)

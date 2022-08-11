@@ -24,6 +24,7 @@ const Payment = () => {
           fill="clear"
           onClick={() => {
             router.push("/tab/Dashboard");
+            window.location.reload()
           }}
         >
           <IonIcon className="back-icon" icon={arrowBack}></IonIcon>

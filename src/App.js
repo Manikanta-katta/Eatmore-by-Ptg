@@ -39,8 +39,9 @@ import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./pages/firebase.js";
-import { AuthContextProvider } from "./pages/Authcontext";
+import {  UserAuth } from "./pages/Authcontext";
 import Payment from "./pages/payment";
+import ProtectedRoute from "./pages/Protected";
 
 setupIonicReact();
 
@@ -50,6 +51,7 @@ const App = () => {
   const updateRef = doc(db, "Eatmore_app_config", "PoAv9WJnSiEcmZ0wcX98");
   const [show, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
+  const { loggedin} = UserAuth();
 
   const handleAlert = (msg, title, btn, appVersion) => {
     presentAlert({
@@ -126,12 +128,15 @@ const App = () => {
   checkUpdate();
   return (
     <IonApp>
-      <AuthContextProvider>
+ 
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/home">
             <Home />
           </Route>
+              <Route exact path="/">
+            <Redirect to="/home" />
+          </Route> 
           <Route exact path="/signuppage">
             <Signup />
           </Route>
@@ -142,15 +147,31 @@ const App = () => {
             <Payment />
           </Route>
           <Route path="/tab">
-            <Tab />
+           <ProtectedRoute>
+           <Tab />
+           </ProtectedRoute>
+        
           </Route>
+          {
+            loggedin ?
+            (
+              <Route exact path="/">
+                <Redirect to="/tab/Dashboard" />
 
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
+              </Route>
+
+            ):(
+              <Route exact path="/">
+                <Redirect to="/loginpage" />
+
+              </Route>
+
+            )
+          }
+
+       
         </IonRouterOutlet>
       </IonReactRouter>
-      </AuthContextProvider>
     </IonApp>
   );
 };

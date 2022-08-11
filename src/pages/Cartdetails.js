@@ -59,7 +59,7 @@ const Cartlist = () => {
 
   auth.onAuthStateChanged((user) => {
     setUserId(user.uid);
-    console.log(user.uid);
+    
   });
   const addtocart = () => {
     const CartRef = collection(
@@ -180,8 +180,8 @@ const Cartlist = () => {
             );
           })}
         </IonGrid>
-      </IonContent>
-      <IonButton className="total" color="danger">
+        <IonGrid className="grid-2">
+        <IonButton className="total" color="danger">
         {" "}
         <StripeCheckout
           stripeKey="pk_test_51LQ3MDSBZsnWZCC5NT8FjMT29baQo8xu9xIVjZatH4ec6ioWjjhjj4QqSrEVrmt5eCjPYdDUvNK6kONvCyJz8Ipr00M8oGkbhs"
@@ -195,6 +195,9 @@ const Cartlist = () => {
         />
         Total : ₹{total}
       </IonButton>
+      </IonGrid>
+      </IonContent>
+      
     </IonPage>
   );
 };

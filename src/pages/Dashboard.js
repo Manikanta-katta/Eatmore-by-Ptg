@@ -88,26 +88,26 @@ const Dashboard = () => {
       price: price,
      
     });
-    
+  
 
     handleToast(msg);
   };
 
   const pushData = () => {
-    const max = sdata.length + 5;
-    const min = max - 5;
-    const newData = [];
+    // const max = sdata.length + 5;
+    // const min = max - 5;
+    // const newData = [];
 
-    if (sdata.length === 7) {
-      setInfiniteDisabled(true);
-    } else {
-      for (let i = min; i < max; i++) {
-        product[i].id = product[i].id + i * i;
-        newData.push(product[i]);
-      }
+    // if (sdata.length === 7) {
+    //   setInfiniteDisabled(true);
+    // } else {
+    //   for (let i = min; i < max; i++) {
+    //     product[i].id = product[i].id + i * i;
+    //     newData.push(product[i]);
+    //   }
 
-      setData([...sdata, ...newData]);
-    }
+    //   setData([...sdata, ...newData]);
+    // }
   };
   const loadingData = (ev) => {
     console.log(sdata.length);

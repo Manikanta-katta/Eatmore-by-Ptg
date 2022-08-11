@@ -64,6 +64,7 @@ import {
                 fill="clear"
                 onClick={() => {
                   router.push("/tab/Dashboard");
+                  
                 }}
               >
                 <IonIcon icon={arrowBack}></IonIcon>

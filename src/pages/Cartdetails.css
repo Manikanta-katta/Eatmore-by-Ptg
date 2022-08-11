@@ -31,7 +31,15 @@
 }
 .total{
     --background: white;
+    display: flex;
+    width: 200px;
+   
+   
 }
 .page{
     --background: white; 
+}
+.grid-2{
+    display: flex;
+    justify-content: center;
 }

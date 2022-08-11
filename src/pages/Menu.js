@@ -41,6 +41,7 @@ const Menu = () => {
   // };
 
   const handlelogout = () => {
+ 
     firebaseApp
       .auth()
       .signOut()
@@ -59,7 +60,10 @@ const Menu = () => {
           <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></IonImg>
         </IonAvatar>
         <IonHeader>
-          <IonLabel className="menu-h">{currentUser?.email}</IonLabel>
+       
+             <IonLabel className="menu-h">{currentUser?.email}</IonLabel>
+          
+         
         </IonHeader>
       </IonToolbar>
       <IonContent fullscreen className="menu-cont">

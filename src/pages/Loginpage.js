@@ -17,14 +17,15 @@ import {
 import "./Logipage.css";
 //import { SignInWithGoogle } from "./firebase";
 import { Link } from "react-router-dom";
-import { firebaseApp } from "./firebase";
-import { useState } from "react";
+import {  firebaseApp } from "./firebase";
+import {  useState } from "react";
 import img1 from "../assets/images/Google.png";
 
-//import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-//import { isPlatform } from "@ionic/react";
+// import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+// import { isPlatform } from "@ionic/react";
 import logo from "../assets/images/Eatmorelogo.png";
 import { alertOutline } from "ionicons/icons";
+
 
 const Login = () => {
 
@@ -33,7 +34,7 @@ const Login = () => {
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
   const [presant, dismiss] = useIonLoading();
-
+  
 
   let router = useIonRouter();
 
@@ -81,18 +82,12 @@ const Login = () => {
   //   const result = await GoogleAuth.signIn();
   //   console.log(result);
   //   if (result) {
-  //     router.push("/tab", "forward");
+  //     router.push("/tab/dashboard", "forward");
 
   //     console.log(result);
   //   }
   // };
-  // const googleLogin = () => {
-  //   if (isPlatform("android")) {
-  //     signInGoogle();
-  //   } else {
-  //     // SignInWithGoogle();
-  //   }
-  // };
+
   const handlelogin = () => {
     clearInputs();
     if (email == null || email === "") {
@@ -139,6 +134,7 @@ const Login = () => {
       dismiss();
     }
   };
+
 
   return (
     <IonPage>
@@ -189,7 +185,7 @@ const Login = () => {
           <IonRow className="gfauth-row">
             <IonButton
               // onClick={(e) => {
-              //   googleLogin();
+              //   signInGoogle();
               // }}
               fill="clear"
             >

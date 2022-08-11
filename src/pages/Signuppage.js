@@ -28,18 +28,19 @@ const Signup = () => {
   const [username, setusername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setconfirmPassword] = useState("");
+  const [phoneNum, setmobilenumber] = useState("");
 
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
   const [presant, dismiss] = useIonLoading();
-
+ const body = `Hello ${username},Get 70percent offer on your first order visit at https://play.google.com/store/apps/details?id=com.eatmore.aPP`;
   let router = useIonRouter();
 
   const clearinputs = () => {
     setEmail("");
     setPassword("");
-    setconfirmPassword("");
+    setmobilenumber("");
+    setusername("");
   };
 
   const handleAlert = (err) => {
@@ -67,7 +68,7 @@ const Signup = () => {
   };
   var templateParams = {
     email:email,
-    name:username,
+    to_name:username,
     
   }
   const sendEmail = () =>{
@@ -90,20 +91,29 @@ const Signup = () => {
     } else if (password == null || password === "") {
       const msg = "please enter your password";
       handleToast(msg);
-    } else if (password === confirmpassword) {
-      presant({
-        message: "Loading",
-        duration: 2000,
-      });
+    } else if (phoneNum == null || phoneNum === "") {
+      const msg = "please enter your mobile number";
+      handleToast(msg);
+    }
+      
+     else {
+      //dismiss();
       firebaseApp
         .auth()
-        .createUserWithEmailAndPassword(email, password, confirmpassword)
+        .createUserWithEmailAndPassword(email, password, phoneNum,username,)
         .then((credentials) => {
           console.log(credentials);
+          fetch(
+
+            `https://sms-service-twilio.herokuapp.com/send-sms?recipient=${phoneNum}&name=${username}&body=${body}`
+      
+          ).then(()=> console.log(username)).catch((err) => console.error(err));
           db.collection("Users").doc(credentials.user.uid).set({
+           
             Email: email,
             password: password,
-            confirmpassword: confirmpassword,
+            mobilenumber: phoneNum,
+            username:username,
           });
         })
 
@@ -129,10 +139,8 @@ const Signup = () => {
               break;
           }
         });
-    } else {
-      //dismiss();
-      handleAlert("password as didn't matched");
     }
+    
   };
   return (
     <IonPage>
@@ -166,10 +174,10 @@ const Signup = () => {
             ></IonInput>
             <IonInput
               className="input3"
-              placeholder="Confirm your password"
-              value={confirmpassword}
-              type="password"
-              onIonChange={(e) => setconfirmPassword(e.detail.value)}
+              placeholder="+91**********"
+              value={phoneNum}
+            
+              onIonChange={(e) => setmobilenumber(e.detail.value)}
             ></IonInput>
           </IonRow>
 

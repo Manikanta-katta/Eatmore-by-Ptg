@@ -63,7 +63,7 @@
   
 }
 .ta-ta{
-
+    display: flex;
     --background: white;
 }
 .link-lo{
