@@ -32,7 +32,7 @@ const Signup = () => {
 
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
-  const [presant, dismiss] = useIonLoading();
+  const [ dismiss] = useIonLoading();
  const body = `Hello ${username},Get 70percent offer on your first order visit at https://play.google.com/store/apps/details?id=com.eatmore.aPP`;
   let router = useIonRouter();
 
