@@ -137,6 +137,7 @@ const Dashboard = () => {
         });
         console.log(products);
         setproduct(products);
+        console.table(products);
       })
       .catch((err) => {
         console.log(err.message);
@@ -237,7 +238,7 @@ const Dashboard = () => {
                           );
                         }}
                       >
-                        Addtocart
+                        addtocart
                       </IonButton>
                     </IonRow>
                   </IonGrid>

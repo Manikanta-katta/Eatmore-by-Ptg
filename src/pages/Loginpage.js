@@ -35,7 +35,7 @@ const Login = () => {
   const [presentAlert] = useIonAlert();
   const [presant, dismiss] = useIonLoading();
   
-
+ 
   let router = useIonRouter();
 
   const clearInputs = () => {
@@ -101,7 +101,7 @@ const Login = () => {
         message: "Loading",
         duration: 2000,
       });
-      firebaseApp
+     firebaseApp
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
