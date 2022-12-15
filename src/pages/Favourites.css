@@ -1,0 +1,19 @@
+.Favouritestxt{
+    display: flex;
+    font-size: x-large;
+    margin-top: 15px;
+    color: black;
+    margin-left: 2%;
+}
+.fav-toolbar{
+    display: flex;
+    --background: white;
+}
+.fav-content{
+    display: flex;
+    --background: white;
+}
+.search{
+    display: flex;
+    --background: white;
+}

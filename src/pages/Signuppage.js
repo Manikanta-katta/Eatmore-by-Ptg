@@ -1,7 +1,6 @@
 import {
   IonButton,
   IonContent,
- 
   IonInput,
   IonPage,
   IonImg,
@@ -10,91 +9,117 @@ import {
   IonRow,
   useIonRouter,
   useIonAlert,
-  useIonToast
+  useIonToast,
+  useIonLoading,
 } from "@ionic/react";
 
 import "./Signuppage.css";
-import img1 from "../assets/images/Google.png";
-import img2 from "../assets/images/Facebook.png";
-import img3 from "../assets/images/Twitter.png";
-import img4 from "../assets/images/Group 11.png";
+
 import { Link } from "react-router-dom";
 import { firebaseApp } from "./firebase";
-import { useState, useEffect } from "react";
-
-import logo from "../assets/images/Group 12.png";
+import { useState } from "react";
+import { db } from "./firebase";
+import logo from "../assets/images/Eatmorelogo.png";
 import { alertOutline } from "ionicons/icons";
+import emailjs from '@emailjs/browser';
+
 
 const Signup = () => {
-  const [user, setUser] = useState("");
+  const [username, setusername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setconfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [PassswordError, setPasswordError] = useState("");
+  const [phoneNum, setmobilenumber] = useState("");
+
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
-
- 
+  const [ dismiss] = useIonLoading();
+ const body = `Hello ${username},Get 70percent offer on your first order visit at https://play.google.com/store/apps/details?id=com.eatmore.aPP`;
   let router = useIonRouter();
 
   const clearinputs = () => {
     setEmail("");
     setPassword("");
-    setconfirmPassword("");
+    setmobilenumber("");
+    setusername("");
   };
-  const clearErrors = () => {
-    setEmailError("");
-    setPasswordError("");
-  };
-  const authlistener = () => {
-    firebaseApp.auth().onAuthStateChanged((user) => {
-      if (user) {
-        clearinputs();
-        setUser(user);
-      } else {
-        setUser("");
-      }
-    });
-  };
-  useEffect(() => {
-    authlistener();
-  }, []);
 
-  const handleAlert = (err) =>{
+  const handleAlert = (err) => {
     presentAlert({
-      header:"Alert",
+      header: "Alert",
       message: err,
-      buttons:["OK"],
-      backdropDismiss:true,
-      transculent:true,
-      animated:true,
-      cssClass:"lp-tp-alert",
+      buttons: ["OK"],
+      backdropDismiss: true,
+      transculent: true,
+      animated: true,
+      cssClass: "lp-tp-alert",
     });
   };
 
-  const handleToast = (err)=>{
-     present({
-      message:err,
-      position:"top",
-      animated:true,
-      duration:2000,
-      color:"light",
-      model:"ios",
+  const handleToast = (err) => {
+    present({
+      message: err,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "light",
+      model: "ios",
       icon: alertOutline,
-
-     })
+    });
+  };
+  var templateParams = {
+    email:email,
+    to_name:username,
+    
   }
-
-  
+  const sendEmail = () =>{
+    emailjs.send("service_nnqe814","template_7858nqa",templateParams,"AecK30ifXvhbkWl0y")
+    .then((result)=>{
+      console.log(result.text);
+    },(error)=>{
+      console.log(error.text);
+    }
+    )
+  }
   const handleSignup = () => {
-    clearErrors();
-    if (password === confirmpassword) {
+    // clearErrors();
+    clearinputs();
+   
+    sendEmail();
+    if (email == null || email === "") {
+      const msg = "please enter your email";
+      handleToast(msg);
+    } else if (password == null || password === "") {
+      const msg = "please enter your password";
+      handleToast(msg);
+    } else if (phoneNum == null || phoneNum === "") {
+      const msg = "please enter your mobile number";
+      handleToast(msg);
+    }
+      
+     else {
+      //dismiss();
       firebaseApp
         .auth()
-        .createUserWithEmailAndPassword(email, password, confirmpassword)
+        .createUserWithEmailAndPassword(email, password, phoneNum,username,)
+        .then((credentials) => {
+          console.log(credentials);
+          fetch(
+
+            `https://sms-service-twilio.herokuapp.com/send-sms?recipient=${phoneNum}&name=${username}&body=${body}`
+      
+          ).then(()=> console.log(username)).catch((err) => console.error(err));
+          db.collection("Users").doc(credentials.user.uid).set({
+           
+            Email: email,
+            password: password,
+            mobilenumber: phoneNum,
+            username:username,
+          });
+        })
+
         .then(() => {
-          router.push("/dashboard");
+          dismiss();
+          router.push("/loginpage");
         })
         .then(() => {
           handleToast(" You have Registered successfully");
@@ -103,24 +128,23 @@ const Signup = () => {
           switch (err.code) {
             case "auth/email-already-in-use":
             case "auth/invalid-email":
-              setEmailError(err.message);
-             
+              dismiss();
+              handleAlert(err);
               break;
             case "auth/weak-password":
-              setPasswordError(err.message);
-               
+              dismiss();
+              handleAlert(err);
+              break;
+            default:
               break;
           }
-        }, handleAlert(emailError));
-    } else {
-      handleAlert("password as didn't matched");
+        });
     }
+    
   };
   return (
     <IonPage>
       <IonContent className="sign-cont">
-      
-
         <IonGrid className="ga-mg">
           <IonRow className="logo-ro">
             <IonImg className="home-last1" src={logo} alt=" "></IonImg>
@@ -129,6 +153,12 @@ const Signup = () => {
             <IonLabel className="signtxt">SignUp</IonLabel>
           </IonRow>
           <IonRow className="inputs">
+          <IonInput
+              className="input0"
+              placeholder="Enter your username"
+              value={username}
+              onIonChange={(e) => setusername(e.detail.value)}
+            ></IonInput>
             <IonInput
               className="input1"
               placeholder="Enter your email"
@@ -144,15 +174,15 @@ const Signup = () => {
             ></IonInput>
             <IonInput
               className="input3"
-              placeholder="Confirm your password"
-              value={confirmpassword}
-              type="password"
-              onIonChange={(e) => setconfirmPassword(e.detail.value)}
+              placeholder="+91**********"
+              value={phoneNum}
+            
+              onIonChange={(e) => setmobilenumber(e.detail.value)}
             ></IonInput>
           </IonRow>
+
           <IonRow className="card-row">
             <IonButton
-             
               onClick={handleSignup}
               color="danger"
               shape="round"
@@ -165,13 +195,10 @@ const Signup = () => {
             <IonLabel className="or">OR</IonLabel>
           </IonRow>
           <IonRow className="text-row">
-            <IonLabel className="text">Don't have any account ? </IonLabel>
-            <Link  to="/loginpage" className="txt">
+            <IonLabel className="text">Already have any account ? </IonLabel>
+            <Link onClick={clearinputs} to="/loginpage" className="txt">
               Login
             </Link>
-          </IonRow>
-          <IonRow>
-            <IonLabel></IonLabel>
           </IonRow>
         </IonGrid>
       </IonContent>

@@ -1,0 +1,31 @@
+.tabBar {
+  display: flex;
+  --background: white;
+}
+.cart-count {
+  position: absolute;
+  z-index: 55;
+
+  border: 1px solid rgb(225, 211, 211);
+  border-radius: 20px;
+  background: white;
+  top: 4px;
+  right: 30px;
+  width: 13px;
+}
+.fav-count {
+  position: absolute;
+  z-index: 55;
+
+  border: 1px solid rgb(225, 211, 211);
+  border-radius: 20px;
+  background: white;
+  top: 4px;
+  right: 30px;
+  width: 13px;
+}
+
+.tab-btn {
+  position: relative;
+  z-index: -55;
+}

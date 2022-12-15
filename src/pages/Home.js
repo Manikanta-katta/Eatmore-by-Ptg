@@ -9,8 +9,10 @@ import {
 } from "@ionic/react";
 
 import "./Home.css";
-import img from "../assets/images/logo.jpg";
+import img from "../assets/images/logo (2).png";
+
 const Home = () => {
+ 
   return (
     <IonPage>
       <IonContent fullscreen color="danger">

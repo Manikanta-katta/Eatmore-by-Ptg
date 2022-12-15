@@ -250,3 +250,9 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-shade: var(--ion-color-col-shade);
   --ion-color-tint: var(--ion-color-col-tint);
 }
+.tab-selected {
+  color: #ee1f1b;
+}
+.tabBar{
+  --background:var(--ion-color-col)
+}

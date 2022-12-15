@@ -1,0 +1,38 @@
+.menu-cont{
+ 
+    --background: white;
+}
+.menu-grid{
+    display: flex;
+    flex-direction: column;
+    --background: white;
+}
+.menu-tb{
+    display: flex;
+    --background: white;
+    
+}
+.menu-h{
+    display: flex;
+  color: black;
+  justify-content: center;
+  margin-top: 15px;
+}
+.img-h{
+    display: flex;
+   margin-top: 10%;
+   margin-left: 45%;
+}
+.menu-txt{
+    display: flex;
+    color: black;
+}
+.menu-list{
+    display: flex;
+    flex-direction: column;
+    --background: white;
+
+}
+.dashboard-row{
+    --background: white;
+}
