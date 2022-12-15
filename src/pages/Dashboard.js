@@ -36,7 +36,10 @@ const Dashboard = () => {
   const [product, setproduct] = useState([]);
   
   const [present] = useIonToast();
+
   const [sdata] = useState([]);
+
+
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
 
   const msg = "  Your Item as successfully added to cart";
